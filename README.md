@@ -52,7 +52,7 @@ Image: ghcr.io/tarampampam/rssbot:latest
  * Manifest List: Yes
  * Supported platforms:
    - linux/amd64
-   - linux/arm64
+   - linux/arm/v6
 ```
 
 ### Usage examples
