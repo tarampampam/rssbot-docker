@@ -3,7 +3,7 @@
 FROM alpine:latest as builder
 
 # renovate: source=github-tags name=iovxw/rssbot
-ARG RSS_BOT_VERSION="v1.4.4"
+ARG RSS_BOT_VERSION="1.4.4"
 
 # can be `en` or `zn`
 ARG LOCALE="en"
@@ -15,7 +15,7 @@ RUN set -x \
         x86_64) DIST_FILE_NAME="rssbot-${LOCALE}-x86_64-unknown-linux-musl-openssl" ;; \
         *) echo >&2 "error: unsupported architecture: $apkArch"; exit 1 ;; \
     esac \
-    && wget -O /tmp/rssbot "https://github.com/iovxw/rssbot/releases/download/${RSS_BOT_VERSION}/${DIST_FILE_NAME}" \
+    && wget -O /tmp/rssbot "https://github.com/iovxw/rssbot/releases/download/v${RSS_BOT_VERSION}/${DIST_FILE_NAME}" \
     && chmod +x /tmp/rssbot \
     && /tmp/rssbot --version
 
