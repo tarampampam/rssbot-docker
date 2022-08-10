@@ -40,5 +40,5 @@ jobs:
           file: Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          build-args: 'LOCALE=zn'
+          build-args: 'LOCALE=zh'
           tags: ghcr.io/${{ github.actor }}/rssbot:${{ steps.slug.outputs.version-semantic }}-zn
