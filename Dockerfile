@@ -23,11 +23,15 @@ WORKDIR /tmp/rootfs
 
 # prepare the rootfs for scratch
 RUN set -x \
-    && mkdir -p ./bin ./etc/ssl \
+    && mkdir -p ./bin ./etc/ssl ./tmp ./data \
     && mv /tmp/rssbot ./bin/rssbot \
     && echo 'rssbot:x:10001:10001::/tmp:/sbin/nologin' > ./etc/passwd \
     && echo 'rssbot:x:10001:' > ./etc/group \
-    && cp -R /etc/ssl/certs ./etc/ssl/certs
+    && chown -R 10001:10001 ./tmp ./data \
+    && chmod 0777 ./tmp \
+    && cp -R /etc/ssl/certs ./etc/ssl/certs \
+    && wget -O ./bin/dumb-init "https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64" \
+    && chmod +x ./bin/dumb-init
 
 # use empty filesystem
 FROM scratch as runtime
@@ -46,4 +50,6 @@ USER 10001:10001
 # import from builder
 COPY --from=builder /tmp/rootfs /
 
-ENTRYPOINT ["/bin/rssbot"]
+WORKDIR /data
+
+ENTRYPOINT ["/bin/dumb-init", "--", "/bin/rssbot"]
