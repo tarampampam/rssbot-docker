@@ -42,7 +42,7 @@ LABEL \
     org.opencontainers.image.description="Lightweight Telegram RSS notification bot" \
     org.opencontainers.image.url="https://github.com/iddqd-uk/telegram-rss-bot" \
     org.opencontainers.image.source="https://github.com/iovxw/rssbot" \
-    org.opencontainers.image.vendor="iddqd-uk"
+    org.opencontainers.image.vendor="tarampampam"
 
 # use an unprivileged user
 USER 10001:10001
