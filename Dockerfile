@@ -51,7 +51,7 @@ LABEL \
     # Docs: <https://github.com/opencontainers/image-spec/blob/master/annotations.md>
     org.opencontainers.image.title="rssbot" \
     org.opencontainers.image.description="Lightweight Telegram RSS notification bot" \
-    org.opencontainers.image.url="https://github.com/iddqd-uk/telegram-rss-bot" \
+    org.opencontainers.image.url="https://github.com/tarampampam/rssbot-docker" \
     org.opencontainers.image.source="https://github.com/iovxw/rssbot" \
     org.opencontainers.image.vendor="tarampampam"
 
