@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/workflow/status/tarampampam/rssbot-docker/tests?maxAge=30&label=tests&logo=github&style=flat-square" alt="" />
-  <img src="https://img.shields.io/github/workflow/status/tarampampam/rssbot-docker/release?maxAge=30&label=release&logo=github&style=flat-square" alt="" />
+  <img src="https://img.shields.io/github/actions/workflow/status/tarampampam/rssbot-docker/tests.yml?branch=master&maxAge=30&label=tests&logo=github&style=flat-square" alt="" />
+  <img src="https://img.shields.io/github/actions/workflow/status/tarampampam/rssbot-docker/release.yml?maxAge=30&label=release&logo=github&style=flat-square" alt="" />
   <img src="https://img.shields.io/github/license/tarampampam/rssbot-docker.svg?maxAge=30&style=flat-square" alt="" />
 </p>
 
