@@ -75,7 +75,7 @@ volumes:
 services:
   rssbot:
     image: ghcr.io/tarampampam/rssbot:latest
-    volumes: [tmp-data:/data:rw]
+    volumes: [rssbot-data:/data:rw]
     command: ['--database', '/data/rssbot.json', '<telegram-bot-token>']
 ```
 
