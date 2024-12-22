@@ -3,7 +3,7 @@
 FROM alpine:latest as builder
 
 # renovate: source=github-tags name=iovxw/rssbot
-ARG RSS_BOT_VERSION="2.0.0-alpha.12"
+ARG RSS_BOT_VERSION="2.0.0-alpha.13"
 
 # can be `en` or `zh`
 ARG LOCALE="en"
