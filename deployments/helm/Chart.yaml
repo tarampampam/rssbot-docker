@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://json.schemastore.org/chart.json
+
+apiVersion: v2
+name: rssbot
+description: Lightweight Telegram RSS notification bot
+
+type: application
+version: 0.0.0 # will be replaced by the release workflow
+appVersion: 0.0.0 # will be replaced by the release workflow
+icon: https://habrastorage.org/webt/cp/23/2s/cp232sxhp0sfosvjrt52jurmcse.png
+home: https://github.com/iovxw/rssbot
+sources: [https://github.com/tarampampam/rssbot-docker]
+keywords: [telegram, rss, bot, rssbot]
