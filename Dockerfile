@@ -1,6 +1,6 @@
-# syntax=docker/dockerfile:1.2
+# syntax=docker/dockerfile:1
 
-FROM alpine:latest as builder
+FROM docker.io/library/alpine:latest as builder
 
 # renovate: source=github-tags name=iovxw/rssbot
 ARG RSS_BOT_VERSION="2.0.0-alpha.13"
