@@ -61,27 +61,27 @@ Image: ghcr.io/tarampampam/rssbot:latest
 > Instead, use specific tags in `X.Y.Z` format for version consistency.
 
 > [!WARNING]
-> Since the versioning of the application inside the image and the Docker image itself are not the same, the
-> previously published image tags listed below are not recommended for use:
+> The versioning of the application inside the image and the Docker image itself are not the same. Therefore, the
+> previously published image tags listed below are **not recommended** for use:
 >
-> - `2.0.0-alpha-11-en`
-> - `2.0.0-alpha-11-zn`
-> - `2.0.0-alpha-12-en`
-> - `2.0.0-alpha-12-zn`
 > - `2.0.0-alpha-13-en`
 > - `2.0.0-alpha-13-zn`
+> - `2.0.0-alpha-12-en`
+> - `2.0.0-alpha-12-zn`
+> - `2.0.0-alpha-11-en`
+> - `2.0.0-alpha-11-zn`
 >
-> Instead, I have started the versioning from `1.0.0` and `1.0.0-zn` (for the Chinese version) and will continue
-> using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always contain the English version,
-> while `X.Y.Z-zh` will indicate the Chinese version, the pattern is as follows:
+> Instead, I have adopted a new versioning system, starting from `1.0.0` and `1.0.0-zh` (for the Chinese version),
+> and will continue using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always correspond to
+> the English version, while `X.Y.Z-zh` will indicate the Chinese version. The pattern is as follows:
 >
-> - `X`, `X-en` for the **major** version (**English** l10n)
-> - `X-zh` for the **major** version (**Chinese** l10n)
-> - `X.Y`, `X.Y-en` for the **minor** version (**English** l10n)
-> - `X.Y-zh` for the **minor** version (**Chinese** l10n)
-> - `X.Y.Z`, `X.Y.Z-en` for the **patch** version (**English** l10n)
-> - `X.Y.Z-zh` for the **patch** version (**Chinese** l10n)
-> - `latest` for the **latest** version (**English** l10n)
+> - `X`, `X-en` – **Major** version (**English** localization)
+> - `X-zh` – **Major** version (**Chinese** localization)
+> - `X.Y`, `X.Y-en` – **Minor** version (**English** localization)
+> - `X.Y-zh` – **Minor** version (**Chinese** localization)
+> - `X.Y.Z`, `X.Y.Z-en` – **Patch** version (**English** localization)
+> - `X.Y.Z-zh` – **Patch** version (**Chinese** localization)
+> - `latest` – **Latest** version (**English** localization)
 
 To install it on Kubernetes (K8s), please use the Helm chart from [ArtifactHUB][artifact-hub].
 
