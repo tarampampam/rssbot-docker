@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM docker.io/library/alpine:latest as builder
+FROM docker.io/library/alpine:latest AS builder
 
 # renovate: source=github-tags name=iovxw/rssbot
 ARG RSS_BOT_VERSION="2.0.0-alpha.13"
@@ -45,7 +45,7 @@ RUN set -x \
     && cp -R /etc/ssl/certs ./etc/ssl/certs
 
 # use empty filesystem
-FROM scratch as runtime
+FROM scratch AS runtime
 
 LABEL \
     # Docs: <https://github.com/opencontainers/image-spec/blob/master/annotations.md>
