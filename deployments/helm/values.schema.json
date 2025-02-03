@@ -172,7 +172,7 @@
         "restricted": {"oneOf": [{"type": "boolean"}, {"type": "null"}]},
         "adminIDs": {
           "oneOf": [
-            {"type": "array", "items": {"type": "string", "pattern": "^[0-9]+$"}},
+            {"type": "array", "items": {"type": "string"}},
             {"type": "null"}
           ]
         },
@@ -186,7 +186,7 @@
           "properties": {
             "plain": {
               "oneOf": [
-                {"type": "string", "pattern": "^[0-9]{3,}:[a-zA-Z0-9_-]{16,}$"},
+                {"type": "string", "minLength": 3},
                 {"type": "null"}
               ]
             },

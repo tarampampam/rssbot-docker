@@ -63,12 +63,12 @@ config:
   restricted: null
   # -- For the private mode, only specified users can use this bot (you get your ID using bots like
   #    @userinfobot or @getidsbot)
-  adminIDs: null
+  adminIDs: null # supports templating
   # -- Custom telegram api URI
   # @default https://api.telegram.org/
   apiUri: null
   # -- Path to the database file
-  dbFilePath: /data/rssbot.json
+  dbFilePath: /data/rssbot.json # supports templating
   # -- Maximum feed size (set 0 to disable the limit)
   # @default 2097152
   maxFeedSize: null
@@ -81,7 +81,7 @@ config:
 
   botToken:
     # -- Telegram bot token, provided as a plain value
-    plain: null
+    plain: null # supports templating
     fromSecret:
       # -- Enable getting the token from a secret
       enabled: false

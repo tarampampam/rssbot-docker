@@ -59,7 +59,7 @@ spec:
             {{- end }}
             {{- if .dbFilePath }}
             - --database
-            - "{{ .dbFilePath }}"
+            - {{ tpl .dbFilePath $ | quote }}
             {{- end }}
             {{- if ne .maxFeedSize nil }}
             - --max-feed-size
@@ -82,25 +82,28 @@ spec:
             {{- with $.Values.config.botToken }}
             {{- $botTokenEnvName := "BOT_TOKEN" }}
             {{- if .plain }}
-            - {name: {{ $botTokenEnvName }}, value: "{{ .plain }}"}
+            - name: "{{ $botTokenEnvName }}"
+              value: {{ tpl .plain $ | quote }}
             {{- else if .fromSecret.enabled }}
-            - name: {{ $botTokenEnvName }}
+            - name: "{{ $botTokenEnvName }}"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ tpl (toYaml .fromSecret.secretName) $ }}"
-                  key: "{{ tpl (toYaml .fromSecret.secretKey) $ }}"
+                  name: {{ tpl .fromSecret.secretName $ | quote }}
+                  key: {{ tpl .fromSecret.secretKey $ | quote }}
             {{- else if .fromConfigMap.enabled }}
-            - name: {{ $botTokenEnvName }}
+            - name: "{{ $botTokenEnvName }}"
               valueFrom:
                 configMapKeyRef:
-                  name: "{{ tpl (toYaml .fromConfigMap.configMapName) $ }}"
-                  key: "{{ tpl (toYaml .fromConfigMap.configMapKey) $ }}"
+                  name: {{ tpl .fromConfigMap.configMapName $ | quote }}
+                  key: {{ tpl .fromConfigMap.configMapKey $ | quote }}
             {{- else }}
-              {{ fail "config.botToken is not set" }}
+            - name: "{{ $botTokenEnvName }}"
+              value: "VALUES ERROR: config.botToken is not set"
             {{- end }}
             {{- end }}
             {{- range $idx, $adminID := $.Values.config.adminIDs }}
-            - {name: "ADMIN_ID_{{ $idx}}", value: "{{ $adminID }}"}
+            - name: "ADMIN_ID_{{ $idx}}"
+              value: {{ tpl $adminID $ | quote }}
             {{- end }}
             {{- with $.Values.deployment.env }}
             {{- tpl (toYaml .) $ | nindent 12 }}
