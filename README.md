@@ -75,6 +75,10 @@ Image: ghcr.io/tarampampam/rssbot:latest
 > using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always contain the English version,
 > while `X.Y.Z-zn` will indicate the Chinese version.
 
+To install it on Kubernetes (K8s), please use the Helm chart from [ArtifactHUB][artifact-hub].
+
+[artifact-hub]:https://artifacthub.io/packages/helm/rssbot/rssbot
+
 ### Usage examples
 
 ```shell
