@@ -31,6 +31,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: LOCALE=${{ matrix.locale }}
           tags: |
+            ghcr.io/${{ github.actor }}/rssbot:${{ steps.slug.outputs.version-major }}-${{ matrix.locale }}
+            ghcr.io/${{ github.actor }}/rssbot:${{ steps.slug.outputs.version-major }}.${{ steps.slug.outputs.version-minor }}-${{ matrix.locale }}
             ghcr.io/${{ github.actor }}/rssbot:${{ steps.slug.outputs.version }}-${{ matrix.locale }}
             ${{ matrix.locale == 'en' && format('ghcr.io/{0}/rssbot:{1}', github.actor, steps.slug.outputs.version) || '' }}
             ${{ matrix.locale == 'en' && format('ghcr.io/{0}/rssbot:latest', github.actor) || '' }}
