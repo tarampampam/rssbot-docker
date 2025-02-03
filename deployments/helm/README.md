@@ -27,5 +27,6 @@ And override the default values in your `values.yaml`:
 
 ```yaml
 rssbot:
-  # ...
+  botToken:
+    plain: "<telegram-bot-token>"
 ```
