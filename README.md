@@ -75,13 +75,17 @@ Image: ghcr.io/tarampampam/rssbot:latest
 > and will continue using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always correspond to
 > the English version, while `X.Y.Z-zh` will indicate the Chinese version. The pattern is as follows:
 >
-> - `X`, `X-en` – **Major** version (**English** localization)
-> - `X-zh` – **Major** version (**Chinese** localization)
-> - `X.Y`, `X.Y-en` – **Minor** version (**English** localization)
-> - `X.Y-zh` – **Minor** version (**Chinese** localization)
-> - `X.Y.Z`, `X.Y.Z-en` – **Patch** version (**English** localization)
-> - `X.Y.Z-zh` – **Patch** version (**Chinese** localization)
-> - `latest` – **Latest** version (**English** localization)
+> | Tag                                 | Description    | Language |
+> |-------------------------------------|----------------|----------|
+> | `latest`                            | Latest version | English  |
+> | `X`, `X-en`                         | Major version  | English  |
+> | `X-zh`                              | Major version  | Chinese  |
+> | `X.Y`, `X.Y-en`                     | Minor version  | English  |
+> | `X.Y-zh`                            | Minor version  | Chinese  |
+> | `X.Y.Z[-build]`, `X.Y.Z[-build]-en` | Patch version  | English  |
+> | `X.Y.Z[-build]-zh`                  | Patch version  | Chinese  |
+
+### Kubernetes
 
 To install it on Kubernetes (K8s), please use the Helm chart from [ArtifactHUB][artifact-hub].
 
