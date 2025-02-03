@@ -75,15 +75,15 @@ Image: ghcr.io/tarampampam/rssbot:latest
 > and will continue using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always correspond to
 > the English version, while `X.Y.Z-zh` will indicate the Chinese version. The pattern is as follows:
 >
-> | Tag                                 | Description    | Language |
-> |-------------------------------------|----------------|----------|
-> | `latest`                            | Latest version | English  |
-> | `X`, `X-en`                         | Major version  | English  |
-> | `X-zh`                              | Major version  | Chinese  |
-> | `X.Y`, `X.Y-en`                     | Minor version  | English  |
-> | `X.Y-zh`                            | Minor version  | Chinese  |
-> | `X.Y.Z[-build]`, `X.Y.Z[-build]-en` | Patch version  | English  |
-> | `X.Y.Z[-build]-zh`                  | Patch version  | Chinese  |
+> | Docker image tag                    | Version description | Language |
+> |-------------------------------------|---------------------|----------|
+> | `latest`                            | Latest              | English  |
+> | `X`, `X-en`                         | Major               | English  |
+> | `X-zh`                              | Major               | Chinese  |
+> | `X.Y`, `X.Y-en`                     | Minor               | English  |
+> | `X.Y-zh`                            | Minor               | Chinese  |
+> | `X.Y.Z[-build]`, `X.Y.Z[-build]-en` | Patch               | English  |
+> | `X.Y.Z[-build]-zh`                  | Patch               | Chinese  |
 
 ### Kubernetes
 
