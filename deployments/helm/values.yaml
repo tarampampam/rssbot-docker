@@ -12,6 +12,8 @@ image:
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion
   tag: null
+  # -- Specify the locale (language) for the bot (if set, will be added to the image tag in the format `-{locale}`)
+  locale: null # `en` or `zh`
 
 deployment:
   # -- Enable deployment
@@ -31,7 +33,7 @@ deployment:
     runAsNonRoot: true
     runAsUser: 10001  # as defined in the Dockerfile
     runAsGroup: 10001 # as defined in the Dockerfile
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false # when you mount a volume, you can set this to true
   resources:
     requests: {memory: 16Mi}
     limits: {memory: 64Mi}
@@ -55,11 +57,38 @@ deployment:
   args: [] # supports templating
 
 config:
-  insecure: true
-  restricted: true
-  adminIDs: [123123123, 321321321, 33333444445555]
-  apiUri: http://localhost:8081
-  dbFilePath: /tmp/path.json
-  maxFeedSize: 123
-  maxInterval: 0
-  minInterval: 321
+  # -- Enable the insecure mode (accepts invalid TLS certificates)
+  insecure: null
+  # -- Make bot commands only accessible for group admins
+  restricted: null
+  # -- For the private mode, only specified users can use this bot (you get your ID using bots like
+  #    @userinfobot or @getidsbot)
+  adminIDs: null
+  # -- Custom telegram api URI
+  # @default https://api.telegram.org/
+  apiUri: null
+  # -- Path to the database file
+  dbFilePath: /data/rssbot.json
+  # -- Maximum feed size (set 0 to disable the limit)
+  # @default 2097152
+  maxFeedSize: null
+  # -- Maximum fetch interval
+  # @default 43200
+  maxInterval: null
+  # -- Minimum fetch interval
+  # @default 300
+  minInterval: null
+
+  botToken:
+    # -- Telegram bot token, provided as a plain value
+    plain: null
+    fromSecret:
+      # -- Enable getting the token from a secret
+      enabled: false
+      secretName: null # supports templating
+      secretKey: null  # supports templating
+    fromConfigMap:
+      # -- Enable getting the token from a config map
+      enabled: false
+      configMapName: null # supports templating
+      configMapKey: null  # supports templating

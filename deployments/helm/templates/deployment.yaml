@@ -33,14 +33,12 @@ spec:
       {{- end }}
       containers:
         - name: {{ include "rssbot.fullname" $ }}
-
           {{- with .securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-
           {{- with $.Values.image }}
-          image: "{{ .repository }}:{{ .tag | default $.Chart.AppVersion }}"
+          image: "{{ .repository }}:{{ .tag | default $.Chart.AppVersion }}{{- if .locale}}-{{ .locale }}{{ end }}"
           imagePullPolicy: {{ .pullPolicy | default "IfNotPresent" }}
           {{- end }}
           args:
@@ -75,112 +73,67 @@ spec:
             - --min-interval
             - "{{ .minInterval }}"
             {{- end }}
-            {{- with .args }}
+            {{- with $.Values.deployment.args }}
             {{- tpl (toYaml .) $ | nindent 12 }}
             {{- end }}
+            - $(BOT_TOKEN)
+            {{- end }}
+          env:
+            {{- with $.Values.config.botToken }}
+            {{- $botTokenEnvName := "BOT_TOKEN" }}
+            {{- if .plain }}
+            - {name: {{ $botTokenEnvName }}, value: "{{ .plain }}"}
+            {{- else if .fromSecret.enabled }}
+            - name: {{ $botTokenEnvName }}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ tpl (toYaml .fromSecret.secretName) $ }}"
+                  key: "{{ tpl (toYaml .fromSecret.secretKey) $ }}"
+            {{- else if .fromConfigMap.enabled }}
+            - name: {{ $botTokenEnvName }}
+              valueFrom:
+                configMapKeyRef:
+                  name: "{{ tpl (toYaml .fromConfigMap.configMapName) $ }}"
+                  key: "{{ tpl (toYaml .fromConfigMap.configMapKey) $ }}"
+            {{- else }}
+              {{ fail "config.botToken is not set" }}
+            {{- end }}
+            {{- end }}
+            {{- range $idx, $adminID := $.Values.config.adminIDs }}
+            - {name: "ADMIN_ID_{{ $idx}}", value: "{{ $adminID }}"}
+            {{- end }}
+            {{- with $.Values.deployment.env }}
+            {{- tpl (toYaml .) $ | nindent 12 }}
             {{- end }}
 
-{{/*
-  #         env:
-  #         {{- with $.Values.config }}
-  #           - {name: HTTP_PORT, value: "{{ .listen.port }}"}
-  #           {{- if .log.level }}
-  #           - {name: LOG_LEVEL, value: "{{ .log.level }}"}
-  #           {{- end }}
-  #           {{- if .log.format }}
-  #           - {name: LOG_FORMAT, value: "{{ .log.format }}"}
-  #           {{- end }}
-  #           {{- if .listen.address }}
-  #           - {name: SERVER_ADDR, value: "{{ .listen.address }}"}
-  #           {{- end }}
-  #           {{- if ne .timeouts.read nil }}
-  #           - {name: HTTP_READ_TIMEOUT, value: "{{ .timeouts.read }}"}
-  #           {{- end }}
-  #           {{- if ne .timeouts.write nil }}
-  #           - {name: HTTP_WRITE_TIMEOUT, value: "{{ .timeouts.write }}"}
-  #           {{- end }}
-  #           {{- if ne .timeouts.idle nil }}
-  #           - {name: HTTP_IDLE_TIMEOUT, value: "{{ .timeouts.idle }}"}
-  #           {{- end }}
-  #           {{- if ne .timeouts.shutdown nil }}
-  #           - {name: SHUTDOWN_TIMEOUT, value: "{{ .timeouts.shutdown }}"}
-  #           {{- end }}
-  #           {{- if .storage.driver }}
-  #           - {name: STORAGE_DRIVER, value: "{{ .storage.driver }}"}
-  #           {{- end }}
-  #           {{- if .storage.dirPath }}
-  #           - {name: FS_STORAGE_DIR, value: "{{ .storage.dirPath }}"}
-  #           {{- end }}
-  #           {{- if .pubsub.driver }}
-  #           - {name: PUBSUB_DRIVER, value: "{{ .pubsub.driver }}"}
-  #           {{- end }}
-  #           {{- if .tunnel.driver }}
-  #           - {name: TUNNEL_DRIVER, value: "{{ .tunnel.driver }}"}
-  #           {{- end }}
-  #           {{- if .tunnel.ngrokAuthToken }}
-  #           - {name: NGROK_AUTHTOKEN, value: "{{ .tunnel.ngrokAuthToken }}"}
-  #           {{- end }}
-  #           {{- if .redis.dsn }}
-  #           - {name: REDIS_DSN, value: "{{ .redis.dsn }}"}
-  #           {{- end }}
-  #           {{- if ne .limits.sessionTTL nil }}
-  #           - {name: SESSION_TTL, value: "{{ .limits.sessionTTL }}"}
-  #           {{- end }}
-  #           {{- if ne .limits.maxRequests nil }}
-  #           - {name: MAX_REQUESTS, value: "{{ .limits.maxRequests }}"}
-  #           {{- end }}
-  #           {{- if ne .limits.maxRequestBodySize nil }}
-  #           - {name: MAX_REQUEST_BODY_SIZE, value: "{{ .limits.maxRequestBodySize }}"}
-  #           {{- end }}
-  #           {{- if .autoCreateSessions }}
-  #           - {name: AUTO_CREATE_SESSIONS, value: "true"}
-  #           {{- end }}
-  #           {{- with $.Values.deployment.env }}
-  #           {{- tpl (toYaml .) $ | nindent 12 }}
-  #           {{- end }}
-  #         {{- end }}
+          {{- with .resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
 
-  #         {{- with .probe }}
-  #         livenessProbe:
-  #           httpGet: {port: http, path: /healthz}
-  #           periodSeconds: {{ .interval }}
-  #           initialDelaySeconds: {{ .initialDelay }}
-  #         readinessProbe:
-  #           httpGet: {port: http, path: /ready}
-  #           periodSeconds: {{ .interval }}
-  #           initialDelaySeconds: {{ .initialDelay }}
-  #         {{- end }}
+          {{- with .volumeMounts }}
+          volumeMounts:
+            {{- tpl (toYaml .) $ | nindent 12 }}
+          {{- end }}
 
-  #         {{- with .resources }}
-  #         resources:
-  #           {{- toYaml . | nindent 12 }}
-  #         {{- end }}
+      {{- with .volumes }}
+      volumes:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
 
-  #         {{- with .volumeMounts }}
-  #         volumeMounts:
-  #           {{- tpl (toYaml .) $ | nindent 12 }}
-  #         {{- end }}
+      {{- with .nodeSelector }}
+      nodeSelector:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
 
-  #     {{- with .volumes }}
-  #     volumes:
-  #       {{- tpl (toYaml .) $ | nindent 8 }}
-  #     {{- end }}
+      {{- with .affinity }}
+      affinity:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
 
-  #     {{- with .nodeSelector }}
-  #     nodeSelector:
-  #       {{- tpl (toYaml .) $ | nindent 8 }}
-  #     {{- end }}
-
-  #     {{- with .affinity }}
-  #     affinity:
-  #       {{- tpl (toYaml .) $ | nindent 8 }}
-  #     {{- end }}
-
-  #     {{- with .tolerations }}
-  #     tolerations:
-  #       {{- tpl (toYaml .) $ | nindent 8 }}
-  #     {{- end }}
-  # {{- end }}
-*/}}
-{{- end }}
+      {{- with .tolerations }}
+      tolerations:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+  {{- end }}
 {{- end }}

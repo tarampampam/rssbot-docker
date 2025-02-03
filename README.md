@@ -56,6 +56,25 @@ Image: ghcr.io/tarampampam/rssbot:latest
    - linux/arm64
 ```
 
+> [!IMPORTANT]
+> It’s recommended to avoid using the `latest` tag, as **major** upgrades may include breaking changes.
+> Instead, use specific tags in `X.Y.Z` format for version consistency.
+
+> [!WARNING]
+> Since the versioning of the application inside the image and the Docker image itself are not the same, the
+> previously published image tags listed below are not recommended for use:
+>
+> - `2.0.0-alpha-11-en`
+> - `2.0.0-alpha-11-zn`
+> - `2.0.0-alpha-12-en`
+> - `2.0.0-alpha-12-zn`
+> - `2.0.0-alpha-13-en`
+> - `2.0.0-alpha-13-zn`
+>
+> Instead, I have started the versioning from `1.0.0` and `1.0.0-zn` (for the Chinese version) and will continue
+> using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always contain the English version,
+> while `X.Y.Z-zn` will indicate the Chinese version.
+
 ### Usage examples
 
 ```shell
@@ -68,8 +87,6 @@ $ docker run --rm -v "$(pwd):/rootfs:rw" \
 Or you can use a `docker-compose`:
 
 ```yaml
-version: '3.2'
-
 volumes:
   rssbot-data: {}
 
@@ -82,7 +99,8 @@ services:
 
 ## Releasing
 
-New versions publishing is very simple - just "publish" new release using repo releases page. Release version should be same as the rssbot version.
+New versions publishing is very simple - just "publish" new release using repo releases page. Release version should
+be same as the rssbot version.
 
 ## License
 

@@ -24,6 +24,17 @@ jobs:
       - {uses: actions/checkout@v4, with: {fetch-depth: 0}}
       - uses: gacts/gitleaks@v1
 
+  lint-charts:
+    name: Lint the chart
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: ./deployments/helm}}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4
+      - run: helm dependency update .
+      - run: helm template --set config.botToken.plain=123:qwerty123456QWERTY . > /dev/null
+      - run: helm lint --set config.botToken.plain=123:qwerty123456QWERTY --strict .
+
   docker-build:
     name: Build the docker image
     runs-on: ubuntu-latest
