@@ -2,8 +2,27 @@ apiVersion: v1
 entries:
   rssbot:
   - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-02-03T16:34:05.792429869Z"
+    description: Lightweight Telegram RSS notification bot
+    digest: 56902365ce4f4455fb1b8790785ad19cca168e187e7b87a3fe9ecf60c136cd08
+    home: https://github.com/iovxw/rssbot
+    icon: https://habrastorage.org/webt/cp/23/2s/cp232sxhp0sfosvjrt52jurmcse.png
+    keywords:
+    - telegram
+    - rss
+    - bot
+    - rssbot
+    name: rssbot
+    sources:
+    - https://github.com/tarampampam/rssbot-docker
+    type: application
+    urls:
+    - https://tarampampam.github.io/rssbot-docker/helm-charts/rssbot-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.0.0-rc3
-    created: "2025-02-03T16:14:57.284977949Z"
+    created: "2025-02-03T16:34:05.79205855Z"
     description: Lightweight Telegram RSS notification bot
     digest: 0c3636915c217f76c7fb41ed18cc8bd9e72678c62718fc56272f9b85a433c1b9
     home: https://github.com/iovxw/rssbot
@@ -22,7 +41,7 @@ entries:
     version: 1.0.0-rc3
   - apiVersion: v2
     appVersion: 1.0.0-rc2
-    created: "2025-02-03T16:14:57.284563796Z"
+    created: "2025-02-03T16:34:05.791656633Z"
     description: Lightweight Telegram RSS notification bot
     digest: a8da28347ad18824cfe0000ea25fb2a860bbd9182b4981ab8056d96a3ee8398c
     home: https://github.com/iovxw/rssbot
@@ -41,7 +60,7 @@ entries:
     version: 1.0.0-rc2
   - apiVersion: v2
     appVersion: 1.0.0-rc1
-    created: "2025-02-03T16:14:57.284156305Z"
+    created: "2025-02-03T16:34:05.791260397Z"
     description: Lightweight Telegram RSS notification bot
     digest: a87ebe8c8d7e1b1188409139ef5fc7d5fec28afff032361e0b32398bd1974928
     home: https://github.com/iovxw/rssbot
@@ -58,4 +77,4 @@ entries:
     urls:
     - https://tarampampam.github.io/rssbot-docker/helm-charts/rssbot-1.0.0-rc1.tgz
     version: 1.0.0-rc1
-generated: "2025-02-03T16:14:57.283577154Z"
+generated: "2025-02-03T16:34:05.790682805Z"
