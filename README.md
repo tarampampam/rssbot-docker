@@ -99,7 +99,7 @@ To install it on Kubernetes (K8s), please use the Helm chart from [ArtifactHUB][
 
 ```shell
 $ docker run --rm -v "$(pwd):/rootfs:rw" \
-    ghcr.io/tarampampam/rssbot:latest \
+    ghcr.io/tarampampam/rssbot:1-en \
       --database /rootfs/rssbot.json \
       <telegram-bot-token>
 ```
@@ -112,7 +112,7 @@ volumes:
 
 services:
   rssbot:
-    image: ghcr.io/tarampampam/rssbot:latest
+    image: ghcr.io/tarampampam/rssbot:1-en
     volumes: [rssbot-data:/data:rw]
     command: ['--database', '/data/rssbot.json', '<telegram-bot-token>']
 ```
