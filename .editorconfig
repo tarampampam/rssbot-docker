@@ -1,4 +1,4 @@
-# docs: <https://editorconfig.org/>
+# EditorConfig docs: <https://editorconfig.org/>
 
 root = true
 
@@ -9,6 +9,11 @@ insert_final_newline = true
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
+max_line_length = 120
 
-[Dockerfile]
-indent_size = 4
+[{*.yml,*.yaml}]
+ij_any_spaces_within_braces = false
+ij_any_spaces_within_brackets = false
+
+[Makefile]
+indent_style = tab

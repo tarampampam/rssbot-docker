@@ -25,6 +25,7 @@ FLAGS:
 OPTIONS:
         --admin <user id>...        Private mode, only specified user can use this bot. This argument can be passed
                                     multiple times to allow multiple admins
+        --api-uri <tgapi-uri>       Custom telegram api URI [default: https://api.telegram.org/]
     -d, --database <path>           Path to database [default: ./rssbot.json]
         --max-feed-size <bytes>     Maximum feed size, 0 is unlimited [default: 2097152]
         --max-interval <seconds>    Maximum fetch interval [default: 43200]
@@ -55,11 +56,50 @@ Image: ghcr.io/tarampampam/rssbot:latest
    - linux/arm64
 ```
 
+> [!IMPORTANT]
+> It’s recommended to avoid using the `latest` tag, as **major** upgrades may include breaking changes.
+> Instead, use specific tags in `X.Y.Z` format for version consistency.
+
+> [!WARNING]
+> The versioning of the application inside the image and the Docker image itself are not the same. Therefore, the
+> previously published image tags listed below are **not recommended** for use:
+>
+> - `2.0.0-alpha-13-en`
+> - `2.0.0-alpha-13-zn`
+> - `2.0.0-alpha-12-en`
+> - `2.0.0-alpha-12-zn`
+> - `2.0.0-alpha-11-en`
+> - `2.0.0-alpha-11-zn`
+>
+> Instead, I have adopted a new versioning system, starting from `1.0.0` and `1.0.0-zh` (for the Chinese version),
+> and will continue using this format moving forward. The `X.Y.Z` (and `X.Y.Z-en`) tags will always correspond to
+> the English version, while `X.Y.Z-zh` will indicate the Chinese version. The pattern is as follows:
+>
+> | Docker Image Tag                    | Version Description | Language |
+> |-------------------------------------|---------------------|----------|
+> | `latest`                            | Latest              | English  |
+> | `X`, `X-en`                         | Major               | English  |
+> | `X-zh`                              | Major               | Chinese  |
+> | `X.Y`, `X.Y-en`                     | Minor               | English  |
+> | `X.Y-zh`                            | Minor               | Chinese  |
+> | `X.Y.Z[-build]`, `X.Y.Z[-build]-en` | Patch               | English  |
+> | `X.Y.Z[-build]-zh`                  | Patch               | Chinese  |
+>
+> When a new version such as `1.2.3` is released, the `latest` tag will be updated to point to the new version,
+> along with the `1`, `1-en`, `1.2`, `1.2-en`, `1.2.3`, and `1.2.3-en` tags. Similarly, the `1-zh`, `1.2-zh`,
+> and `1.2.3-zh` tags will be updated accordingly.
+
+### Kubernetes
+
+To install it on Kubernetes (K8s), please use the Helm chart from [ArtifactHUB][artifact-hub].
+
+[artifact-hub]:https://artifacthub.io/packages/helm/rssbot/rssbot
+
 ### Usage examples
 
 ```shell
 $ docker run --rm -v "$(pwd):/rootfs:rw" \
-    ghcr.io/tarampampam/rssbot:latest \
+    ghcr.io/tarampampam/rssbot:1-en \
       --database /rootfs/rssbot.json \
       <telegram-bot-token>
 ```
@@ -67,21 +107,20 @@ $ docker run --rm -v "$(pwd):/rootfs:rw" \
 Or you can use a `docker-compose`:
 
 ```yaml
-version: '3.2'
-
 volumes:
   rssbot-data: {}
 
 services:
   rssbot:
-    image: ghcr.io/tarampampam/rssbot:latest
+    image: ghcr.io/tarampampam/rssbot:1-en
     volumes: [rssbot-data:/data:rw]
     command: ['--database', '/data/rssbot.json', '<telegram-bot-token>']
 ```
 
 ## Releasing
 
-New versions publishing is very simple - just "publish" new release using repo releases page. Release version should be same as the rssbot version.
+New versions publishing is very simple - just "publish" new release using repo releases page. Release version should
+be same as the rssbot version.
 
 ## License
 

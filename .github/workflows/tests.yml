@@ -1,6 +1,10 @@
-name: tests
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# docs: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: 🧪 Tests
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [master, main]
     tags-ignore: ['**']
@@ -9,35 +13,43 @@ on:
     paths-ignore: ['**.md']
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-tests
   cancel-in-progress: true
 
-jobs: # Docs: <https://git.io/JvxXE>
-  gitleaks:
-    name: Gitleaks
-    runs-on: ubuntu-20.04
+jobs:
+  git-leaks:
+    name: Check for GitLeaks
+    runs-on: ubuntu-latest
+    steps:
+      - {uses: actions/checkout@v4, with: {fetch-depth: 0}}
+      - uses: gacts/gitleaks@v1
+
+  lint-charts:
+    name: Lint the chart
+    runs-on: ubuntu-latest
+    defaults: {run: {working-directory: ./deployments/helm}}
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
-
-      - name: Check for GitLeaks
-        uses: gacts/gitleaks@v1 # Action page: <https://github.com/gacts/gitleaks>
+      - uses: azure/setup-helm@v4
+      - run: helm dependency update .
+      - run: helm template . > /dev/null
+      - run: helm lint --strict .
 
   docker-build:
     name: Build the docker image
-    runs-on: ubuntu-20.04
-    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: {locale: [en, zh]}
     steps:
       - uses: actions/checkout@v4
-
       - uses: docker/setup-qemu-action@v3
-
       - uses: docker/setup-buildx-action@v3
-
-      - uses: docker/build-push-action@v6 # Action page: <https://github.com/docker/build-push-action>
+      - uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
+          build-args: LOCALE=${{ matrix.locale }}
           push: false
           tags: app:ci
