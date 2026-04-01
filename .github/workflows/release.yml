@@ -16,15 +16,15 @@ jobs:
       matrix: {locale: [en, zh]}
     steps:
       - uses: actions/checkout@v6
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - {uses: gacts/github-slug@v1, id: slug}
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: .
           push: true
@@ -44,7 +44,7 @@ jobs:
     defaults: {run: {working-directory: ./deployments/helm}}
     steps:
       - uses: actions/checkout@v6
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
       - {uses: gacts/github-slug@v1, id: slug}
       - run: |
           helm package \
@@ -63,7 +63,7 @@ jobs:
     needs: [helm-pack]
     steps:
       - {uses: actions/checkout@v4, with: {ref: gh-pages}}
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
       - uses: actions/download-artifact@v8
         with: {name: helm-chart, path: ./helm-charts}
       - name: Update the index.yaml
